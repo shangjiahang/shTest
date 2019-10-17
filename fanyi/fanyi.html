@@ -1,0 +1,217 @@
+﻿<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>测试bopomofo-jquery.js</title>
+		<script type="text/javascript" src="./libs/jquery-1.10.2.js"></script>
+		<script type="text/javascript" src="./libs/pinyins.js" ></script>
+		<script type="text/javascript" src="./libs/polyphones.js" ></script>
+		<script type="text/javascript" src="./libs/md5.js"></script>
+		<script type="text/javascript" src="./bopomofo-jquery.js" ></script>
+		<script type="text/javascript" src="./libs/jsunit.js" ></script>
+		<script type="text/javascript" src="./libs/vue.js" ></script>
+		<style type="text/css">
+			*{margin: 0;padding: 0;}
+			html,body,#bopomofoDiv{
+				width: 100%;
+				height: 100%;
+			}
+			.up{
+				height: 60px;
+			}
+			.up>div{
+				margin: 0 auto;
+				text-align: center;
+			}
+			.bottom{
+				min-width: 900px;
+				text-align: center;
+			}
+			.bottom>div{
+				overflow: hidden;
+				display: inline-block;
+				width: 450px;
+			    border: 1px solid #CCCCCC;
+			    height: 300px;
+			}
+			.bottom>div>div{
+				text-align: left;
+				width: 443px;
+				display: inline-block;
+				border: 1px solid #CCCCCC;
+				height: 293px;
+				vertical-align: top;
+				overflow: hidden;
+				padding: 3px 9px 3px 13px;
+			}
+			textarea{
+				width: 103%;
+			    border: 0 !important;
+			    outline: none;
+			    height: 100%;
+			    resize:none;
+			}
+			.rightDiv{
+				overflow-y: scroll !important;
+				border: 0 !important;
+			}
+		</style>
+	</head>
+	<body>
+		<script type="text/javascript"> 
+			function doTTS(v){
+				var ttsDiv = document.getElementById('bdtts_div_id');
+				var ttsAudio = document.getElementById('tts_autio_id');
+				ttsDiv.removeChild(ttsAudio);
+				var au1 = '<audio id="tts_autio_id" autoplay="autoplay">';
+				var eee = '<embed id="tts_embed_id" height="0" width="0" src="">';
+				var au2 = '</audio>';
+				var sss;
+				// 这样就可实现播放内容的替换了
+				if (v == 1) {
+					var ttsText = document.getElementById('ttsText1').value;
+					sss = '<source id="tts_source_id" src="http://tts.baidu.com/text2audio?lan=zh&ie=UTF-8&spd=2&text='+ttsText+'" type="audio/mpeg">';
+					ttsDiv.innerHTML = au1 + sss + eee + au2;
+					ttsAudio = document.getElementById('tts_autio_id');
+					ttsAudio.play();
+				} else {
+					var query = document.getElementById('ttsText1').value;
+					var salt = (new Date).getTime();
+					var str1 = '20191017000342172' + query + salt + 'CkSVOZDaVrhrLvQ0LsbX';
+					var sign = MD5(str1);
+					$.ajax({
+						url: 'http://api.fanyi.baidu.com/api/trans/vip/translate',
+						type: 'get',
+						dataType: "jsonp",
+						data: {
+							q: query,
+							appid: '20191017000342172',
+							salt: salt,
+							from: 'auto',
+							to: 'auto',
+							sign: sign
+						},
+						success(data) {
+							var ttsText;
+							try{
+								ttsText = data.trans_result[0].dst;
+							}catch(err){
+								alert("作者在这里把API翻译接口服务关闭了，如果有需要请联系作者：航仔 q:1352934537");
+								ttsText = "Sorry, the service is not available";
+							}
+							document.getElementById('ttsText2').innerText = ttsText;
+							sss = '<source id="tts_source_id" src="http://tts.baidu.com/text2audio?lan=en&ie=UTF-8&spd=2&text='+ttsText+'" type="audio/mpeg">';
+							ttsDiv.innerHTML = au1 + sss + eee + au2;
+							ttsAudio = document.getElementById('tts_autio_id');
+							ttsAudio.play();
+						},
+						error(err){
+							console.log("请求翻译失败",err);
+						}
+					});
+				}
+			}
+		</script>
+		<div id="bopomofoDiv">
+			<div class="up">
+				<div class="">
+					<label for="">拼音样式</label>
+					<select v-model="toneType">
+						<option value="0">声母带音调</option>
+						<option value="1">数字音调在最后</option>
+						<option selected value="2">无音调</option>
+					</select>
+					<label for="">是否大小写</label>
+					<select v-model="upper">
+						<option value="1">全拼音大写</option>
+						<option selected value="0">全拼音小写</option>
+					</select>
+					<label for="">首字母样式</label>
+					<select v-model="cap">
+						<option value="1">首字母大写</option>
+						<option selected value="0">首字母小写</option>
+					</select>
+					<label for="">分割符</label>
+					<input type="text" name="" id="" v-model="split"/>
+					<input type="button" id="" @click="setText" value="拼音翻译" />
+					<input type="button" id="tts_btn" onclick="doTTS(1)" value="播放1">
+					<input type="button" id="tts_btn" onclick="doTTS(2)" value="英文播放">
+				</div>
+			</div>
+			<div id="bdtts_div_id">
+				<audio id="tts_autio_id" autoplay="autoplay">
+					<div id="tts_source_id"></div><div id="tts_embed_id"></div>
+				</audio>
+			</div>	
+			<div class="bottom">
+				<div class="">
+					<div class="leftDiv"  contenteditable="true">
+						<textarea name="" id="ttsText1" v-model="valueText" rows="" cols=""></textarea>
+					</div>
+				</div>
+				<div class="">
+					<div class="rightDiv" id="ttsText2" v-html="oldText">
+					</div>
+				</div>
+			</div>
+		</div>
+		<script>
+			
+			let bopomofo = $.bopomofo();
+			
+			let bopomofovue = new Vue({
+				el:"#bopomofoDiv",
+				data:{
+					valueText:"商嘉航",
+					toneType:"2",
+					upper:"1",
+					cap:"1",
+					split:" ",
+					oldText:""
+				},
+				created: function() {
+					this.setText();
+				},
+				methods:{
+	          		setText(){
+	          			var t1,t2,t3;
+	          			if(this.upper == "0"){t1 = false;}else{t1 = true;}
+	          			if(this.cap == "0"){t2 = false;}else{t2 = true;}
+	          			if(this.toneType == "0"){
+	          				t3 = 0;
+	          			}else if(this.toneType == "1"){
+	          				t3 = 1;
+	          			}else{
+	          				t3 = 2;
+	          			}
+	          			this.oldText = bopomofo.pinyin(this.valueText,t3, t1, t2, this.split);
+	          			console.log(t1,t2,t3);
+	          		}
+	       		},
+				watch:{//
+		        	valueText:{
+					 	handler(newName, oldName) {
+					 		this.setText();
+						}
+					},upper:{
+					 	handler(newName, oldName) {
+					 		this.setText();
+						}
+					},cap:{
+					 	handler(newName, oldName) {
+					 		this.setText();
+						}
+					},toneType:{
+					 	handler(newName, oldName) {
+					 		this.setText();
+						}
+					},split:{
+					 	handler(newName, oldName) {
+					 		this.setText();
+						}
+					}
+		        }
+			})
+		</script>
+	</body>
+</html>
