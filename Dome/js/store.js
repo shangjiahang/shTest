@@ -4,6 +4,7 @@ const store = new Vuex.Store({
 		flag: "index",
 		type: null,
 		spacerList: [],	//购物车列表
+		datas: [],	//json --替换数据库数据
 	},
 	mutations: {	//用于提供修改仓库数据
 		setadd1:function(state,data){
@@ -17,6 +18,9 @@ const store = new Vuex.Store({
 		},
 		setadd4:function(state,data){
 			state.spacerList.push(data);
+		},
+		setadd5:function(state,data){
+			state.datas = data;
 		},
 	},
 	getters: {	//用于提供组件访问仓库数据
@@ -32,5 +36,11 @@ const store = new Vuex.Store({
 		doneTodos4:function(state){
 			return state.spacerList;
 		},
+		doneTodos5:function(state){
+			return state.datas;
+		},
 	}
 })
+$.getJSON("data/datalist.json",function(data){
+	store.commit('setadd5',data);
+},false);

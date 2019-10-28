@@ -33,12 +33,10 @@ Vue.component("shIndex1",{ //test1:组件名
 	       	}).catch((response)=>{
 	            /*console.log(response);
 	            alert("获取获取随机一条记录初始数据失败");*/
-	            axios.get(domeurl+'/data/datalist.json').then((response)=>{
-					this.datalist = response.data[0];
-	           	}).catch((response)=>{
-	                console.log(response);
-	                alert("获取数据失败3");
-	            })
+		        //获取随机数
+		        var suj = Math.ceil(Math.random()*(this.$store.getters.doneTodos5.length-1)); 
+	           
+				this.datalist = this.$store.getters.doneTodos5[suj];
 	        })
 		}
 	}
@@ -69,19 +67,16 @@ Vue.component("shIndex2",{
 	       	}).catch((response)=>{
 	            /*console.log(response);
 	            alert("获取获取随机一条记录初始数据失败");*/
-	            axios.get(domeurl+'/data/datalist.json').then((response)=>{
-					var a1 = [];
-					for(var i=0;i<response.data.length;i++){
-						if(i<5){
-							a1.push(response.data[i]);
-						}
+	            
+				var a1 = [];
+				for(var i=0;i<this.$store.getters.doneTodos5.length;i++){
+					if(i<5){
+						a1.push(this.$store.getters.doneTodos5[i]);
 					}
-					this.datalist5 = a1;
-		            this.datalist1 = response.data[5];
-	           	}).catch((response)=>{
-	                console.log(response);
-	                alert("获取数据失败1");
-	            })
+				}
+				this.datalist5 = a1;
+	            this.datalist1 = this.$store.getters.doneTodos5[5];
+	           	
 	        })
 		}
 	}
@@ -118,19 +113,16 @@ Vue.component("shIndex3",{
 	       	}).catch((response)=>{
 	            /*console.log(response);
 	            alert("获取获取随机一条记录初始数据失败");*/
-	            axios.get(domeurl+'/data/datalist.json').then((response)=>{
-					var a1 = [];
-					for(var i=0;i<response.data.length;i++){
-						if(i<7){
-							a1.push(response.data[i]);
-						}
+	            
+				var a1 = [];
+				for(var i=0;i<this.$store.getters.doneTodos5.length;i++){
+					if(i<7){
+						a1.push(this.$store.getters.doneTodos5[i]);
 					}
-					this.datalist7 = a1;
-		            this.datalist1 = response.data[8];
-	           	}).catch((response)=>{
-	                console.log(response);
-	                alert("获取数据失败10");
-	            })
+				}
+				this.datalist7 = a1;
+	            this.datalist1 = this.$store.getters.doneTodos5[8];
+	           	
 	        })
 		}
 	}
@@ -163,20 +155,17 @@ Vue.component("shIndex4",{
 	       	}).catch((response)=>{
 	            /*console.log(response);
 	            alert("获取获取随机一条记录初始数据失败");*/
-	            axios.get(domeurl+'/data/datalist.json').then((response)=>{
-					var a1 = [];
-					for(var i=0;i<response.data.length;i++){
-						if(i<8){
-							a1.push(response.data[i]);
-						}
+	            
+				var a1 = [];
+				for(var i=0;i<this.$store.getters.doneTodos5.length;i++){
+					if(i<8){
+						a1.push(this.$store.getters.doneTodos5[i]);
 					}
-					this.datalist8 = a1;
-		            this.datalist1 = response.data[8];
-		            this.datalist2 = response.data[9];
-	           	}).catch((response)=>{
-	                console.log(response);
-	                alert("获取数据失败9");
-	            })
+				}
+				this.datalist8 = a1;
+	            this.datalist1 = this.$store.getters.doneTodos5[8];
+	            this.datalist2 = this.$store.getters.doneTodos5[9];
+	           	
 	        })
 		}
 	}
@@ -213,19 +202,16 @@ Vue.component("shIndex5",{
 	       	}).catch((response)=>{
 	            /*console.log(response);
 	            alert("获取获取随机一条记录初始数据失败");*/
-	            axios.get(domeurl+'/data/datalist.json').then((response)=>{
-					var a1 = [];
-					for(var i=0;i<response.data.length;i++){
-						if(i<11){
-							a1.push(response.data[i]);
-						}
+	            
+				var a1 = [];
+				for(var i=0;i<this.$store.getters.doneTodos5.length;i++){
+					if(i<11){
+						a1.push(this.$store.getters.doneTodos5[i]);
 					}
-					this.datalist12 = a1;
-	            	this.datalist1 = response.data[11];
-	           	}).catch((response)=>{
-	                console.log(response);
-	                alert("获取数据失败8");
-	            })
+				}
+				this.datalist12 = a1;
+            	this.datalist1 = this.$store.getters.doneTodos5[11];
+	           	
 	        })
 		}
 	}
@@ -288,18 +274,15 @@ new Vue({
 	       	}).catch((response)=>{
 	            /*console.log(response);
 	            alert("获取根组件获取初始数据失败");*/
-	            axios.get(domeurl+'/data/datalist.json').then((response)=>{
-					var a1 = [];
-					for(var i=0;i<response.data.length;i++){
-						if(i<8){
-							a1.push(response.data[i]);
-						}
+	            
+				var a1 = [];
+				for(var i=0;i<this.$store.getters.doneTodos5.length;i++){
+					if(i<8){
+						a1.push(this.$store.getters.doneTodos5[i]);
 					}
-					this.$store.commit('setadd1',a1);
-	           	}).catch((response)=>{
-	                console.log(response);
-	                alert("获取数据失败7");
-	            })
+				}
+				this.$store.commit('setadd1',a1);
+	           	
 	        })
 		}
 	},
@@ -374,18 +357,14 @@ new Vue({
 			       	}).catch((response)=>{
 			            /*console.log(response);
 			            alert("获取shLiebiao初始数据失败");*/
-			            axios.get(domeurl+'/data/datalist.json').then((response)=>{
-							var a1 = [];
-							for(var i=0;i<response.data.length;i++){
-								if(i<8){
-									a1.push(response.data[i]);
-								}
+			            
+						var a1 = [];
+						for(var i=0;i<this.$store.getters.doneTodos5.length;i++){
+							if(i<8){
+								a1.push(this.$store.getters.doneTodos5[i]);
 							}
-							this.$store.commit('setadd1',a1);
-			           	}).catch((response)=>{
-			                console.log(response);
-			                alert("获取数据失败6");
-			            })
+						}
+						this.$store.commit('setadd1',a1);
 			        })
 				},
 				fun2: function(){
@@ -395,18 +374,14 @@ new Vue({
 			       	}).catch((response)=>{
 			            /*console.log(response);
 			            alert("获取shLiebiao初始数据失败");*/
-			            axios.get(domeurl+'/data/datalist.json').then((response)=>{
-			            	var a1 = [];
-							for(var i=0;i<response.data.length;i++){
-								if(response.data[i].typearr[0].indexOf(this.$store.getters.doneTodos3) != -1 ){
-									a1.push(response.data[i]); 
-								}
+	           
+		            	var a1 = [];
+						for(var i=0;i<this.$store.getters.doneTodos5.length;i++){
+							if(this.$store.getters.doneTodos5[i].typearr[0].indexOf(this.$store.getters.doneTodos3) != -1 ){
+								a1.push(this.$store.getters.doneTodos5[i]); 
 							}
-							this.$store.commit('setadd1',a1);
-			           	}).catch((response)=>{
-			                console.log(response);
-			                alert("获取数据失败5");
-			            })
+						}
+						this.$store.commit('setadd1',a1);
 			        })
 				},
 				deleteshangpin: function(v) {
@@ -445,12 +420,10 @@ new Vue({
 			       	}).catch((response)=>{
 			            /*console.log(response);
 			            alert("获取根组件获取初始数据失败");*/
-			            axios.get(domeurl+'/data/datalist.json').then((response)=>{
-							this.shangpingData = response.data[0];
-			           	}).catch((response)=>{
-			                console.log(response);
-			                alert("获取数据失败4");
-			            })
+			            var suj = Math.ceil(Math.random()*(this.$store.getters.doneTodos5.length-1)); 
+	           
+						this.shangpingData = this.$store.getters.doneTodos5[suj];
+			           	
 			        })
 				},
 				collection: function(){
@@ -575,17 +548,13 @@ new Vue({
 		           	}).catch((response)=>{
 		                /*console.log(response);
 		                alert("获取初始数据失败");*/
-		               	axios.get(domeurl+'/data/datalist.json').then((response)=>{
-							for(var i=0;i<response.data.length;i++){
-								if(response.data[i].id == this.$store.getters.doneTodos3){
-									this.xqData = response.data[i];
-								}
+						for(var i=0;i<this.$store.getters.doneTodos5.length;i++){
+							if(this.$store.getters.doneTodos5[i].id == this.$store.getters.doneTodos3){
+								this.xqData = this.$store.getters.doneTodos5[i];
 							}
-							this.imgsrc = this.xqData.imgarr[0].imgurl+this.xqData.imgarr[0].imgname;
-			           	}).catch((response)=>{
-			                console.log(response);
-			                alert("获取数据失败11");
-			            })
+						}
+						this.imgsrc = this.xqData.imgarr[0].imgurl+this.xqData.imgarr[0].imgname;
+			           	
 		            })
 				},
 				setimgID:function(v){
@@ -613,14 +582,12 @@ new Vue({
 		           	}).catch((response)=>{
 		                /*console.log(response);
 		                alert("获取初始数据失败");*/
-		               axios.get(domeurl+'/data/datalist.json').then((response)=>{
-							for(var i=0;i<3;i++){
-								this.listData.push(response.data[i]);
-							}
-			           	}).catch((response)=>{
-			                console.log(response);
-			                alert("获取数据失败2");
-			            })
+		                
+						for(var i=0;i<3;i++){
+							
+							this.listData.push(this.$store.getters.doneTodos5[i]);
+						}
+			           	
 		            })
 				},
 				fun2:function(v){	//购买
